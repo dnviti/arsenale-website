@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  /* Arsenale brand colors */
+  --color-primary: #2196f3;
+  --color-primary-dark: #1976d2;
+  --color-primary-light: #64b5f6;
+  --color-secondary: #ff9800;
+  --color-secondary-dark: #f57c00;
+  --color-accent: #00bcd4;
+  --color-accent-light: #4dd0e1;
+
+  /* Dark theme surfaces */
+  --color-dark-bg: #1a1a2e;
+  --color-dark-surface: #16213e;
+  --color-dark-surface-light: #1e2a4a;
+  --color-dark-border: #2a3a5c;
+
+  /* Text colors */
+  --color-text-primary: #e0e0e0;
+  --color-text-secondary: #a0a0b0;
+  --color-text-muted: #707080;
+
+  /* Font */
+  --font-sans: 'Roboto', ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-dark-bg);
+  color: var(--color-text-primary);
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}

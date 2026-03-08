@@ -1,0 +1,28 @@
+---
+const techs = [
+  { name: 'React', color: '#61DAFB' },
+  { name: 'Express.js', color: '#ffffff' },
+  { name: 'PostgreSQL', color: '#4169E1' },
+  { name: 'Docker', color: '#2496ED' },
+  { name: 'Socket.IO', color: '#ffffff' },
+  { name: 'Guacamole', color: '#4CAF50' },
+  { name: 'TypeScript', color: '#3178C6' },
+  { name: 'Prisma', color: '#5A67D8' },
+];
+---
+
+<section class="py-12 bg-dark-surface/50 border-y border-dark-border">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <p class="text-center text-sm text-text-muted uppercase tracking-widest mb-8">Built With</p>
+    <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
+      {techs.map(({ name, color }) => (
+        <span
+          class="text-sm font-medium px-4 py-2 rounded-lg bg-dark-surface border border-dark-border text-text-secondary hover:text-white hover:border-dark-border transition-colors"
+          style={`border-left: 3px solid ${color}`}
+        >
+          {name}
+        </span>
+      ))}
+    </div>
+  </div>
+</section>

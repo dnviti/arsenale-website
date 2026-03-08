@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import ValueProps from '../components/home/ValueProps.astro';
+import FeatureShowcase from '../components/home/FeatureShowcase.astro';
+import TechStack from '../components/home/TechStack.astro';
+import DemoCallout from '../components/home/DemoCallout.astro';
+import QuickStart from '../components/home/QuickStart.astro';
+import OpenSource from '../components/home/OpenSource.astro';
+---
+
+<BaseLayout
+  title="Arsenale — Source Available Privileged Access Manager | SSH & RDP in Your Browser"
+  description="Source-available, self-hosted Privileged Access Manager. SSH terminals and RDP desktops in your browser, with AES-256-GCM encryption, multi-tenant teams, and audit logging."
+>
+  <Hero />
+  <ValueProps />
+  <FeatureShowcase />
+  <TechStack />
+  <DemoCallout />
+  <QuickStart />
+  <OpenSource />
+</BaseLayout>
