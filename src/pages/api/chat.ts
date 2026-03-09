@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import Anthropic from '@anthropic-ai/sdk';
 import docsBundle from '../../data/docs-bundle.json';
 
 export const prerender = false;
@@ -67,10 +68,24 @@ ${docSections}`;
 const SYSTEM_PROMPT = buildSystemPrompt();
 console.log(`[chat] System prompt loaded (${SYSTEM_PROMPT.length} chars, ~${Math.round(SYSTEM_PROMPT.length / 4)} tokens)\n${SYSTEM_PROMPT}`);
 
-// --- Ollama Configuration ---
+// --- Provider Configuration ---
+const LLM_PROVIDER = (process.env.LLM_PROVIDER || 'ollama') as 'claude' | 'ollama';
+
+// Ollama settings
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://ollama-web:11434';
 const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'qwen3.5:0.8b';
-console.log(`[chat] Ollama endpoint: ${OLLAMA_BASE_URL}, model: ${OLLAMA_MODEL}`);
+
+// Claude settings
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || '';
+const CLAUDE_MODEL = 'claude-haiku-4-5';
+const CLAUDE_MAX_TOKENS = 4096;
+
+console.log(`[chat] Provider: ${LLM_PROVIDER}`);
+if (LLM_PROVIDER === 'ollama') {
+  console.log(`[chat] Ollama endpoint: ${OLLAMA_BASE_URL}, model: ${OLLAMA_MODEL}`);
+} else {
+  console.log(`[chat] Claude model: ${CLAUDE_MODEL}, API key: ${ANTHROPIC_API_KEY ? 'set' : 'MISSING'}`);
+}
 
 // --- API Handler ---
 interface ChatMessage {
@@ -84,6 +99,14 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   if (isRateLimited(ip)) {
     return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please wait before sending more messages.' }), {
       status: 429,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  // Claude API key check
+  if (LLM_PROVIDER === 'claude' && !ANTHROPIC_API_KEY) {
+    return new Response(JSON.stringify({ error: 'Chat service is not configured.' }), {
+      status: 503,
       headers: { 'Content-Type': 'application/json' },
     });
   }
@@ -116,7 +139,94 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     });
   }
 
-  // Call Ollama API with streaming
+  // Dispatch to selected provider
+  if (LLM_PROVIDER === 'claude') {
+    return streamClaude(messages);
+  }
+  return streamOllama(messages);
+};
+
+// --- Claude Streaming ---
+async function streamClaude(messages: ChatMessage[]): Promise<Response> {
+  try {
+    const client = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
+
+    const stream = client.messages.stream({
+      model: CLAUDE_MODEL,
+      max_tokens: CLAUDE_MAX_TOKENS,
+      thinking: { type: 'disabled' },
+      system: [
+        {
+          type: 'text' as const,
+          text: SYSTEM_PROMPT,
+          cache_control: { type: 'ephemeral' as const },
+        },
+      ],
+      messages: messages.map((m) => ({ role: m.role, content: m.content })),
+    });
+
+    const encoder = new TextEncoder();
+    const readable = new ReadableStream({
+      start(controller) {
+        let closed = false;
+        let fullResponse = '';
+
+        function closeOnce() {
+          console.log(`[chat] Full model response:\n${fullResponse}`);
+          if (!closed) {
+            closed = true;
+            controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+            controller.close();
+          }
+        }
+
+        stream.on('text', (text) => {
+          if (!closed) {
+            fullResponse += text;
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
+          }
+        });
+
+        stream.on('error', (err) => {
+          console.error('[chat] Claude stream error:', err);
+          if (!closed) {
+            controller.enqueue(
+              encoder.encode(`data: ${JSON.stringify({ error: 'Stream error occurred.' })}\n\n`)
+            );
+          }
+          closeOnce();
+        });
+
+        stream.on('message', (message) => {
+          const usage = message.usage as unknown as Record<string, number>;
+          console.log(`[chat] Cache: write=${usage.cache_creation_input_tokens ?? 0}, read=${usage.cache_read_input_tokens ?? 0}, uncached=${usage.input_tokens}`);
+        });
+
+        stream.on('end', () => {
+          closeOnce();
+        });
+      },
+    });
+
+    return new Response(readable, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+      },
+    });
+  } catch (err) {
+    console.error('[chat] Claude API error:', err);
+    return new Response(JSON.stringify({ error: 'Failed to generate response. Please try again.' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+// --- Ollama Streaming ---
+async function streamOllama(messages: ChatMessage[]): Promise<Response> {
   try {
     const ollamaRes = await fetch(`${OLLAMA_BASE_URL}/v1/chat/completions`, {
       method: 'POST',
@@ -141,7 +251,6 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       });
     }
 
-    // Return SSE stream
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
     const readable = new ReadableStream({
@@ -206,4 +315,4 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       headers: { 'Content-Type': 'application/json' },
     });
   }
-};
+}

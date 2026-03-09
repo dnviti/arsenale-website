@@ -13,8 +13,10 @@ COPY --from=build /app/package.json ./
 
 ENV HOST=0.0.0.0
 ENV PORT=8080
+ENV LLM_PROVIDER=ollama
 ENV OLLAMA_BASE_URL=http://ollama-web:11434
 ENV OLLAMA_MODEL=qwen3.5:0.8b
+ENV ANTHROPIC_API_KEY=
 
 EXPOSE 8080
 CMD ["node", "./dist/server/entry.mjs"]
