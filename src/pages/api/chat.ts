@@ -1,5 +1,4 @@
 import type { APIRoute } from 'astro';
-import Anthropic from '@anthropic-ai/sdk';
 import docsBundle from '../../data/docs-bundle.json';
 
 export const prerender = false;
@@ -68,6 +67,11 @@ ${docSections}`;
 const SYSTEM_PROMPT = buildSystemPrompt();
 console.log(`[chat] System prompt loaded (${SYSTEM_PROMPT.length} chars, ~${Math.round(SYSTEM_PROMPT.length / 4)} tokens)\n${SYSTEM_PROMPT}`);
 
+// --- Ollama Configuration ---
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://ollama-web:11434';
+const OLLAMA_MODEL = process.env.OLLAMA_MODEL || 'qwen3.5:0.8b';
+console.log(`[chat] Ollama endpoint: ${OLLAMA_BASE_URL}, model: ${OLLAMA_MODEL}`);
+
 // --- API Handler ---
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -80,15 +84,6 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   if (isRateLimited(ip)) {
     return new Response(JSON.stringify({ error: 'Rate limit exceeded. Please wait before sending more messages.' }), {
       status: 429,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  // Validate API key
-  const apiKey = process.env.ANTHROPIC_API_KEY || import.meta.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return new Response(JSON.stringify({ error: 'Chat service is not configured.' }), {
-      status: 503,
       headers: { 'Content-Type': 'application/json' },
     });
   }
@@ -121,64 +116,78 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     });
   }
 
-  // Call Anthropic API with streaming
+  // Call Ollama API with streaming
   try {
-    const client = new Anthropic({ apiKey });
-
-    const stream = client.messages.stream({
-      model: 'claude-haiku-4-5',
-      max_tokens: 4096,
-      system: [
-        {
-          type: 'text' as const,
-          text: SYSTEM_PROMPT,
-          cache_control: { type: 'ephemeral' as const, ttl: '1h' },
-        },
-      ],
-      messages: messages.map((m) => ({ role: m.role, content: m.content })),
+    const ollamaRes = await fetch(`${OLLAMA_BASE_URL}/v1/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: OLLAMA_MODEL,
+        stream: true,
+        think: false,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...messages.map((m) => ({ role: m.role, content: m.content })),
+        ],
+      }),
     });
+
+    if (!ollamaRes.ok) {
+      const errText = await ollamaRes.text().catch(() => 'Unknown error');
+      console.error(`[chat] Ollama error ${ollamaRes.status}: ${errText}`);
+      return new Response(JSON.stringify({ error: 'Failed to generate response. Please try again.' }), {
+        status: 502,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
     // Return SSE stream
     const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
     const readable = new ReadableStream({
-      start(controller) {
-        let closed = false;
+      async start(controller) {
         let fullResponse = '';
+        const reader = ollamaRes.body!.getReader();
+        let buffer = '';
 
-        function closeOnce() {
-          console.log(`[chat] Full model response:\n${fullResponse}`);
-          if (!closed) {
-            closed = true;
-            controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-            controller.close();
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+              const trimmed = line.trim();
+              if (!trimmed || !trimmed.startsWith('data: ')) continue;
+
+              const data = trimmed.slice(6);
+              if (data === '[DONE]') continue;
+
+              try {
+                const parsed = JSON.parse(data);
+                const content = parsed.choices?.[0]?.delta?.content;
+                if (content) {
+                  fullResponse += content;
+                  controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text: content })}\n\n`));
+                }
+              } catch {
+                // Skip malformed JSON chunks
+              }
+            }
           }
+        } catch (err) {
+          console.error('[chat] Ollama stream error:', err);
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify({ error: 'Stream error occurred.' })}\n\n`)
+          );
         }
 
-        stream.on('text', (text) => {
-          if (!closed) {
-            fullResponse += text;
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
-          }
-        });
-
-        stream.on('error', (err) => {
-          console.error('Anthropic stream error:', err);
-          if (!closed) {
-            controller.enqueue(
-              encoder.encode(`data: ${JSON.stringify({ error: 'Stream error occurred.' })}\n\n`)
-            );
-          }
-          closeOnce();
-        });
-
-        stream.on('message', (message) => {
-          const usage = message.usage as unknown as Record<string, number>;
-          console.log(`[chat] Cache: write=${usage.cache_creation_input_tokens ?? 0}, read=${usage.cache_read_input_tokens ?? 0}, uncached=${usage.input_tokens}`);
-        });
-
-        stream.on('end', () => {
-          closeOnce();
-        });
+        console.log(`[chat] Full model response:\n${fullResponse}`);
+        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+        controller.close();
       },
     });
 
@@ -191,7 +200,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       },
     });
   } catch (err) {
-    console.error('Anthropic API error:', err);
+    console.error('[chat] Ollama API error:', err);
     return new Response(JSON.stringify({ error: 'Failed to generate response. Please try again.' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

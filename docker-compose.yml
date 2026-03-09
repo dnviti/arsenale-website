@@ -1,0 +1,49 @@
+services:
+  ollama-web:
+    image: ollama/ollama
+    volumes:
+      - ollama_models:/root/.ollama
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:11434/api/tags || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    networks:
+      - internal
+    restart: unless-stopped
+
+  ollama-init:
+    image: ollama/ollama
+    depends_on:
+      ollama-web:
+        condition: service_healthy
+    entrypoint: ["ollama", "pull", "qwen3.5:0.8b"]
+    environment:
+      OLLAMA_HOST: http://ollama-web:11434
+    networks:
+      - internal
+    restart: "no"
+
+  website:
+    image: ghcr.io/dnviti/arsenale-website:latest
+    ports:
+      - "8080:8080"
+    environment:
+      OLLAMA_BASE_URL: http://ollama-web:11434
+      OLLAMA_MODEL: qwen3.5:0.8b
+    depends_on:
+      ollama-web:
+        condition: service_healthy
+      ollama-init:
+        condition: service_completed_successfully
+    networks:
+      - internal
+    restart: unless-stopped
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  ollama_models:
