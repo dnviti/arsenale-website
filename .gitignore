@@ -4,8 +4,9 @@ node_modules/
 # Build output
 dist/
 
-# Generated docs bundle (fetched at build time)
+# Generated data files (fetched at build time)
 src/data/docs-bundle.json
+src/data/release-info.json
 
 # Astro
 .astro/
