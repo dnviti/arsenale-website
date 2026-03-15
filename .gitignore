@@ -6,7 +6,6 @@ dist/
 
 # Generated data files (fetched at build time)
 src/data/docs-bundle.json
-src/data/release-info.json
 
 # Astro
 .astro/

@@ -51,35 +51,7 @@ async function fetchDocs() {
   console.log(`\nDocs bundle written to ${OUTPUT_FILE} (${Object.keys(bundle).length} documents)`);
 }
 
-async function fetchRelease() {
-  console.log('\nFetching latest release from GitHub...');
-  try {
-    const res = await fetch('https://api.github.com/repos/dnviti/arsenale/releases/latest');
-    if (!res.ok) {
-      throw new Error(`Failed to fetch release: ${res.status} ${res.statusText}`);
-    }
-    const release = await res.json();
-    const info = {
-      version: release.tag_name,
-      url: release.html_url,
-      date: release.published_at ? release.published_at.split('T')[0] : new Date().toISOString().split('T')[0],
-    };
-    const outPath = join(OUTPUT_DIR, 'release-info.json');
-    writeFileSync(outPath, JSON.stringify(info, null, 2));
-    console.log(`  ✓ release ${info.version} (${info.date})`);
-    console.log(`Release info written to ${outPath}`);
-  } catch (err) {
-    console.warn(`  ✗ ${err.message}`);
-    // Write fallback so the site can still build
-    const fallback = { version: '', url: 'https://github.com/dnviti/arsenale/releases', date: '' };
-    const outPath = join(OUTPUT_DIR, 'release-info.json');
-    writeFileSync(outPath, JSON.stringify(fallback, null, 2));
-    console.warn('Wrote fallback release-info.json');
-  }
-}
-
 fetchDocs()
-  .then(() => fetchRelease())
   .catch((err) => {
     console.error('Fatal error fetching docs:', err);
     process.exit(1);

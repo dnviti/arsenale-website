@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import logoImg from '../../assets/logo-transparent.png';
-import releaseInfo from '../../data/release-info.json';
 ---
 
 <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden">
@@ -48,20 +47,19 @@ import releaseInfo from '../../data/release-info.json';
       <span class="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-medium text-accent uppercase tracking-widest bg-accent/10 border border-accent/20 rounded-full">
         Privileged Access Manager
       </span>
-      {releaseInfo.version && (
-        <a
-          href={releaseInfo.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-medium text-primary bg-primary/10 border border-primary/20 rounded-full hover:bg-primary/20 transition-colors"
-        >
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
-            <line x1="7" y1="7" x2="7.01" y2="7" />
-          </svg>
-          {releaseInfo.version}
-        </a>
-      )}
+      <a
+        id="release-version-hero"
+        href="https://github.com/dnviti/arsenale/releases"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden items-center gap-1.5 px-4 py-1.5 text-xs font-medium text-primary bg-primary/10 border border-primary/20 rounded-full hover:bg-primary/20 transition-colors"
+      >
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+          <line x1="7" y1="7" x2="7.01" y2="7" />
+        </svg>
+        <span id="release-version-hero-text"></span>
+      </a>
     </div>
   </div>
 </section>

@@ -78,5 +78,47 @@ const canonicalURL = new URL(canonicalPath, Astro.site);
     </main>
     <Footer />
     <ChatWidget />
+
+    <script>
+      const GITHUB_API = 'https://api.github.com/repos/dnviti/arsenale/releases/latest';
+      const CACHE_KEY = 'arsenale-release-info';
+      const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+      async function fetchRelease() {
+        const cached = sessionStorage.getItem(CACHE_KEY);
+        if (cached) {
+          const { data, ts } = JSON.parse(cached);
+          if (Date.now() - ts < CACHE_TTL) return data;
+        }
+
+        const res = await fetch(GITHUB_API);
+        if (!res.ok) return null;
+        const release = await res.json();
+        const data = { version: release.tag_name, url: release.html_url };
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() }));
+        return data;
+      }
+
+      fetchRelease()
+        .then((info) => {
+          if (!info?.version) return;
+
+          const headerEl = document.getElementById('release-version-header');
+          if (headerEl) {
+            headerEl.textContent = info.version;
+            headerEl.classList.remove('hidden');
+          }
+
+          const heroEl = document.getElementById('release-version-hero');
+          const heroText = document.getElementById('release-version-hero-text');
+          if (heroEl && heroText) {
+            heroEl.href = info.url;
+            heroText.textContent = info.version;
+            heroEl.classList.remove('hidden');
+            heroEl.classList.add('inline-flex');
+          }
+        })
+        .catch(() => {});
+    </script>
   </body>
 </html>

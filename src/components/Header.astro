@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import iconImg from '../assets/icon.png';
-import releaseInfo from '../data/release-info.json';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -22,9 +21,7 @@ const currentPath = Astro.url.pathname;
       <span class="text-xl font-bold text-white tracking-wide group-hover:text-primary transition-colors">
         Arsenale
       </span>
-      {releaseInfo.version && (
-        <span class="text-xs text-text-secondary/60">{releaseInfo.version}</span>
-      )}
+      <span id="release-version-header" class="hidden text-xs text-text-secondary/60"></span>
     </a>
 
     <!-- Desktop nav -->
