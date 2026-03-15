@@ -58,7 +58,7 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
               <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
               <div>
                 <p class="text-white text-sm font-medium">JWT Access & Refresh Tokens</p>
-                <p class="text-text-secondary text-sm">Access tokens (15 min) + refresh tokens (7 days) with automatic client-side refresh</p>
+                <p class="text-text-secondary text-sm">Access tokens (15 min) + refresh tokens (7 days) with automatic client-side refresh and family-based rotation with reuse detection</p>
               </div>
             </div>
             <div class="flex items-start gap-3">
@@ -72,7 +72,7 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
               <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
               <div>
                 <p class="text-white text-sm font-medium">WebAuthn / Passkeys</p>
-                <p class="text-text-secondary text-sm">FIDO2 support via SimpleWebAuthn for phishing-resistant authentication</p>
+                <p class="text-text-secondary text-sm">FIDO2 support via SimpleWebAuthn for phishing-resistant hardware security key and biometric authentication</p>
               </div>
             </div>
             <div class="flex items-start gap-3">
@@ -85,9 +85,75 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
             <div class="flex items-start gap-3">
               <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
               <div>
-                <p class="text-white text-sm font-medium">OAuth 2.0 Providers</p>
-                <p class="text-text-secondary text-sm">Google, Microsoft, GitHub, and generic OIDC with separate vault password</p>
+                <p class="text-white text-sm font-medium">OAuth 2.0 & OIDC Providers</p>
+                <p class="text-text-secondary text-sm">Google, Microsoft, GitHub, and any OIDC-compliant provider (Authentik, Keycloak, Authelia, Zitadel). Link multiple providers to one account</p>
               </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
+              <div>
+                <p class="text-white text-sm font-medium">SAML 2.0</p>
+                <p class="text-text-secondary text-sm">Enterprise SSO with Azure AD/Entra ID, Okta, OneLogin, and ADFS</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
+              <div>
+                <p class="text-white text-sm font-medium">LDAP / Active Directory</p>
+                <p class="text-text-secondary text-sm">Directory-based login with STARTTLS, group-based access control, auto-provisioning, and periodic background synchronization</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
+              <div>
+                <p class="text-white text-sm font-medium">Password Breach Protection</p>
+                <p class="text-text-secondary text-sm">Passwords checked against HaveIBeenPwned using k-Anonymity. Real-time strength meter powered by zxcvbn on all password forms</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Token & Session Security -->
+      <div class="mb-12">
+        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
+          Token & Session Security
+        </h3>
+        <div class="bg-dark-surface border border-dark-border rounded-xl p-6 space-y-3">
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Token Binding</p>
+              <p class="text-text-secondary text-sm">JWT tokens tied to originating IP and User-Agent via SHA-256 hash. Mismatched tokens trigger family-wide revocation and audit logging</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Account Lockout</p>
+              <p class="text-text-secondary text-sm">Automatic lockout after repeated failed login attempts with configurable thresholds and durations</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Session Limits (OWASP A07)</p>
+              <p class="text-text-secondary text-sm">Configurable max concurrent sessions (oldest evicted) and absolute session timeout forcing re-authentication regardless of activity</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Impossible Travel Detection</p>
+              <p class="text-text-secondary text-sm">Haversine-based geo-velocity analysis flags login attempts requiring physically impossible travel speeds between consecutive sessions</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Rate Limiting</p>
+              <p class="text-text-secondary text-sm">Granular rate limits on login, registration, password reset, SMS, vault, session, and OAuth endpoints to prevent abuse</p>
             </div>
           </div>
         </div>
@@ -102,7 +168,11 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
         <div class="bg-dark-surface border border-dark-border rounded-xl p-6 space-y-3">
           <div class="flex items-start gap-3">
             <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <p class="text-text-secondary text-sm">Auto-lock after configurable inactivity period (default: 30 minutes)</p>
+            <p class="text-text-secondary text-sm">Auto-lock after configurable inactivity period (default: 30 minutes) with MFA re-unlock support</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <p class="text-text-secondary text-sm">Master keys zeroed in memory before deletion. Periodic cleanup catches expired sessions</p>
           </div>
           <div class="flex items-start gap-3">
             <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
@@ -114,8 +184,31 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
           </div>
           <div class="flex items-start gap-3">
             <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <p class="text-text-secondary text-sm">Email verification enforced on registration with 24-hour token expiry</p>
+            <p class="text-text-secondary text-sm">Recovery key generated during registration enables vault recovery if the user forgets their password</p>
           </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <p class="text-text-secondary text-sm">Tenant admins can enforce a maximum auto-lock duration, capping what users can set</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Loss Prevention -->
+      <div class="mb-12">
+        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><line x1="9" y1="9" x2="15" y2="15" /><line x1="15" y1="9" x2="9" y2="15" /></svg>
+          Data Loss Prevention
+        </h3>
+        <div class="bg-dark-surface border border-dark-border rounded-xl p-6">
+          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+            Tenant-level DLP policies control clipboard and file operations across SSH, RDP, and VNC sessions. Four controls are available: disable clipboard copy (remote to local), disable clipboard paste (local to remote), disable file download, and disable file upload. Per-connection overrides enforce most-restrictive rules.
+          </p>
+          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+            Browser-level exfiltration vectors are blocked: DevTools shortcuts, View Source, Save Page, Print, and drag-and-drop to external applications are all intercepted and suppressed.
+          </p>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            IP allowlists restrict which IP addresses and CIDR ranges can log in to a tenant, with flag or block enforcement mode across all authentication paths including OAuth and SAML.
+          </p>
         </div>
       </div>
 
@@ -123,14 +216,17 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
       <div class="mb-12">
         <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
           <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>
-          Audit Logging
+          Audit & Monitoring
         </h3>
         <div class="bg-dark-surface border border-dark-border rounded-xl p-6">
           <p class="text-text-secondary text-sm leading-relaxed mb-4">
-            Every significant action is recorded in the audit log with 24+ distinct action types, including login attempts, vault operations, connection access, sharing events, and administrative changes. The audit log is filterable by date range, action type, and user, with full pagination.
+            Over 100 distinct audit action types track authentication events, connection usage, sharing activities, administrative operations, and session lifecycle events. Logs include client IP addresses with optional geographic location enrichment using MaxMind GeoLite2 data and interactive map visualization.
+          </p>
+          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+            Session monitoring allows administrators to view and terminate active remote sessions across the organization. Idle session detection automatically marks sessions as idle after configurable inactivity periods.
           </p>
           <p class="text-text-secondary text-sm leading-relaxed">
-            Configurable log levels via the <code class="text-accent bg-dark-bg px-1.5 py-0.5 rounded text-xs">LOG_LEVEL</code> environment variable provide granular control over application logging output.
+            Session recording captures SSH terminals (asciicast format) and RDP/VNC sessions (Guacamole format) with in-browser playback, command extraction, and video export. Configurable retention with automatic cleanup.
           </p>
         </div>
       </div>
@@ -143,7 +239,7 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
         </h3>
         <div class="bg-dark-surface border border-dark-border rounded-xl p-6">
           <p class="text-text-secondary text-sm leading-relaxed">
-            Arsenale is designed to run entirely on your own infrastructure. No data ever leaves your network. You maintain full control over your encryption keys, user data, connection credentials, and audit logs. Deploy with Docker or Docker Compose on any Linux server.
+            Arsenale is designed to run entirely on your own infrastructure. No data ever leaves your network. You maintain full control over your encryption keys, user data, connection credentials, and audit logs. Deploy with Docker or Docker Compose on any Linux server. Both Docker and Podman are supported, including rootless Podman configurations.
           </p>
         </div>
       </div>
