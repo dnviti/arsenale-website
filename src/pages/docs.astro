@@ -3,6 +3,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/shared/SectionHeading.astro';
 
 const GITHUB_DOCS = 'https://github.com/dnviti/arsenale/blob/main/docs';
+const GITHUB_GUIDES = 'https://github.com/dnviti/arsenale/blob/develop/docs/guides';
+
+const guides = [
+  {
+    title: 'Zero-Trust Tunnel User Guide',
+    description: 'Set up and manage outbound-only WebSocket tunnels to reach remote networks without opening inbound ports or using a VPN.',
+    href: `${GITHUB_GUIDES}/zero-trust-tunnel-user-guide.md`,
+    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>',
+  },
+  {
+    title: 'Tunnel Implementation Guide',
+    description: 'Technical deep-dive into the tunnel architecture: agent lifecycle, WebSocket protocol, health monitoring, and gateway container integration.',
+    href: `${GITHUB_GUIDES}/tunnel-implementation-guide.md`,
+    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>',
+  },
+];
 
 const docs = [
   {
@@ -98,6 +114,38 @@ const docs = [
         subtitle="Technical documentation hosted on GitHub"
       />
 
+      <h2 class="text-xl font-bold text-white mb-4">Guides</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        {guides.map((guide) => (
+          <div class="bg-dark-surface border border-dark-border rounded-xl p-6 hover:border-primary/40 transition-all group">
+            <a
+              href={guide.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block"
+            >
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary/20 transition-colors">
+                  <Fragment set:html={guide.icon} />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-white mb-1 group-hover:text-primary transition-colors flex items-center gap-2">
+                    {guide.title}
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 group-hover:opacity-100 transition-opacity">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                      <polyline points="15 3 21 3 21 9" />
+                      <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                  </h3>
+                  <p class="text-sm text-text-secondary leading-relaxed">{guide.description}</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        ))}
+      </div>
+
+      <h2 class="text-xl font-bold text-white mb-4">Reference</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {docs.map((doc) => (
           <div class="bg-dark-surface border border-dark-border rounded-xl p-6 hover:border-primary/40 transition-all group">
