@@ -231,6 +231,138 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
         </div>
       </div>
 
+      <!-- Zero-Trust Tunnel Security -->
+      <div class="mb-12">
+        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>
+          Zero-Trust Tunnel Security
+        </h3>
+        <div class="bg-dark-surface border border-dark-border rounded-xl p-6 space-y-3">
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Outbound-Only Connections</p>
+              <p class="text-text-secondary text-sm">Tunnel agents initiate outbound connections only. No inbound firewall rules, port forwarding, or public IP addresses required on the target network</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Token-Based Authentication</p>
+              <p class="text-text-secondary text-sm">256-bit cryptographically random tokens authenticate agents. Tokens are SHA-256 hashed server-side and verified using constant-time comparison to prevent timing attacks</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Encrypted Token Storage</p>
+              <p class="text-text-secondary text-sm">Agent tokens are encrypted at rest with AES-256-GCM using per-token initialization vectors, ensuring compromise of one token does not expose others</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Frame Size Limits</p>
+              <p class="text-text-secondary text-sm">WebSocket frames are capped at 1 MB maximum payload to prevent memory exhaustion and denial-of-service attacks against the tunnel server</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">SSRF Prevention</p>
+              <p class="text-text-secondary text-sm">Agents restrict TCP connections to localhost only, preventing server-side request forgery. The server independently validates target host and port before routing traffic</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Heartbeat Throttling</p>
+              <p class="text-text-secondary text-sm">Agent heartbeat database writes are throttled to prevent resource abuse and excessive I/O from high-frequency keep-alive signals</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Audit Trail</p>
+              <p class="text-text-secondary text-sm">All tunnel connect and disconnect events are logged with client IP address and agent version for forensic analysis and compliance reporting</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Agent IP Restrictions</p>
+              <p class="text-text-secondary text-sm">Tenant-configurable CIDR allowlists restrict which IP addresses can establish agent connections, limiting tunnel access to trusted network ranges</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Token Lifecycle Management</p>
+              <p class="text-text-secondary text-sm">Automatic token rotation, maximum lifetime enforcement, and immediate revocation ensure compromised tokens have a bounded window of exposure</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attribute-Based Access Control (ABAC) -->
+      <div class="mb-12">
+        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
+          Attribute-Based Access Control (ABAC)
+        </h3>
+        <div class="bg-dark-surface border border-dark-border rounded-xl p-6 space-y-3">
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Policy-Based Session Gating</p>
+              <p class="text-text-secondary text-sm">ABAC policies are evaluated before every SSH, RDP, and VNC session. Access is granted only when all applicable policies pass their attribute checks</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Time Window Constraints</p>
+              <p class="text-text-secondary text-sm">UTC-based time window policies restrict session access to specific hours and days. Supports overnight windows spanning midnight with exclusive end boundaries</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Trusted Device Verification</p>
+              <p class="text-text-secondary text-sm">Policies can require WebAuthn credential verification at session time, ensuring connections originate only from registered trusted devices</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">MFA Step-Up Requirement</p>
+              <p class="text-text-secondary text-sm">Session policies can enforce that multi-factor authentication was completed during the current login, preventing access from sessions that bypassed MFA</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Fail-Closed Design</p>
+              <p class="text-text-secondary text-sm">Malformed or unparseable policies always deny access. The system never fails open, ensuring misconfigurations result in denied sessions rather than unauthorized access</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Additive Evaluation</p>
+              <p class="text-text-secondary text-sm">All applicable policies are evaluated and must pass. When multiple policies apply, the most restrictive combination wins, providing defense in depth</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
+            <div>
+              <p class="text-white text-sm font-medium">Audit Logging</p>
+              <p class="text-text-secondary text-sm">All policy denials are logged with the specific reason for rejection. Denial reasons are recorded for administrator review but never exposed to end users</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Self-hosted advantage -->
       <div class="mb-12">
         <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
