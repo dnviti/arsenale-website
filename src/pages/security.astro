@@ -8,202 +8,133 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
   description="Learn about Arsenale's security architecture: AES-256-GCM encryption, Argon2id key derivation, multi-factor authentication, audit logging, and self-hosted deployment."
   canonicalPath="/security/"
 >
-  <section class="pt-32 pb-20">
+  <section class="pt-32 pb-24">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <SectionHeading
-        title="Security"
-        subtitle="Enterprise-grade security designed for privileged access management"
-      />
+      <div data-animate>
+        <SectionHeading
+          title="Security"
+          subtitle="Enterprise-grade security designed for privileged access management"
+        />
+      </div>
 
       <!-- Encryption -->
-      <div class="mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-          Encryption at Rest
-        </h3>
-        <div class="bg-dark-surface border border-dark-border rounded-xl p-6 space-y-4">
+      <div class="mb-16" data-animate>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-serif text-lg text-accent/30 select-none">01</span>
+          <h3 class="text-xl font-serif text-text-primary">Encryption at Rest</h3>
+        </div>
+        <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6 space-y-5">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <p class="text-sm text-text-muted mb-1">Cipher</p>
-              <p class="text-white font-mono text-sm">AES-256-GCM</p>
+              <p class="text-[11px] text-text-muted uppercase tracking-wider mb-1">Cipher</p>
+              <p class="text-text-primary font-mono text-sm">AES-256-GCM</p>
             </div>
             <div>
-              <p class="text-sm text-text-muted mb-1">Key Derivation</p>
-              <p class="text-white font-mono text-sm">Argon2id</p>
+              <p class="text-[11px] text-text-muted uppercase tracking-wider mb-1">Key Derivation</p>
+              <p class="text-text-primary font-mono text-sm">Argon2id</p>
             </div>
             <div>
-              <p class="text-sm text-text-muted mb-1">Password Hashing</p>
-              <p class="text-white font-mono text-sm">bcrypt</p>
+              <p class="text-[11px] text-text-muted uppercase tracking-wider mb-1">Password Hashing</p>
+              <p class="text-text-primary font-mono text-sm">bcrypt</p>
             </div>
             <div>
-              <p class="text-sm text-text-muted mb-1">Master Key Storage</p>
-              <p class="text-white font-mono text-sm">Never stored on server</p>
+              <p class="text-[11px] text-text-muted uppercase tracking-wider mb-1">Master Key Storage</p>
+              <p class="text-text-primary font-mono text-sm">Never stored on server</p>
             </div>
           </div>
-          <p class="text-text-secondary text-sm leading-relaxed border-t border-dark-border pt-4">
+          <p class="text-text-secondary text-sm leading-relaxed border-t border-dark-border/40 pt-4">
             All credentials stored in the vault are encrypted with AES-256-GCM. The encryption key is derived from the user's master password using Argon2id with high memory and time cost parameters. The master key exists only in the user's session and is never persisted to disk or database.
           </p>
         </div>
       </div>
 
       <!-- Authentication -->
-      <div class="mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
-          Authentication
-        </h3>
-        <div class="bg-dark-surface border border-dark-border rounded-xl p-6 space-y-4">
-          <div class="space-y-3">
+      <div class="mb-16" data-animate>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-serif text-lg text-accent/30 select-none">02</span>
+          <h3 class="text-xl font-serif text-text-primary">Authentication</h3>
+        </div>
+        <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6 space-y-4">
+          {[
+            { title: 'JWT Access & Refresh Tokens', desc: 'Access tokens (15 min) + refresh tokens (7 days) with automatic client-side refresh and family-based rotation with reuse detection' },
+            { title: 'TOTP Two-Factor Authentication', desc: 'RFC 6238 compliant, compatible with Google Authenticator, Authy, and other TOTP apps' },
+            { title: 'WebAuthn / Passkeys', desc: 'FIDO2 support via SimpleWebAuthn for phishing-resistant hardware security key and biometric authentication' },
+            { title: 'SMS Verification', desc: 'SMS-based MFA via Twilio, AWS SNS, or Vonage' },
+            { title: 'OAuth 2.0 & OIDC Providers', desc: 'Google, Microsoft, GitHub, and any OIDC-compliant provider (Authentik, Keycloak, Authelia, Zitadel). Link multiple providers to one account' },
+            { title: 'SAML 2.0', desc: 'Enterprise SSO with Azure AD/Entra ID, Okta, OneLogin, and ADFS' },
+            { title: 'LDAP / Active Directory', desc: 'Directory-based login with STARTTLS, group-based access control, auto-provisioning, and periodic background synchronization' },
+            { title: 'Password Breach Protection', desc: 'Passwords checked against HaveIBeenPwned using k-Anonymity. Real-time strength meter powered by zxcvbn on all password forms' },
+          ].map(({ title, desc }) => (
             <div class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-accent/50 mt-2 shrink-0"></span>
               <div>
-                <p class="text-white text-sm font-medium">JWT Access & Refresh Tokens</p>
-                <p class="text-text-secondary text-sm">Access tokens (15 min) + refresh tokens (7 days) with automatic client-side refresh and family-based rotation with reuse detection</p>
+                <p class="text-text-primary text-sm font-medium">{title}</p>
+                <p class="text-text-secondary text-sm">{desc}</p>
               </div>
             </div>
-            <div class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
-              <div>
-                <p class="text-white text-sm font-medium">TOTP Two-Factor Authentication</p>
-                <p class="text-text-secondary text-sm">RFC 6238 compliant, compatible with Google Authenticator, Authy, and other TOTP apps</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
-              <div>
-                <p class="text-white text-sm font-medium">WebAuthn / Passkeys</p>
-                <p class="text-text-secondary text-sm">FIDO2 support via SimpleWebAuthn for phishing-resistant hardware security key and biometric authentication</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
-              <div>
-                <p class="text-white text-sm font-medium">SMS Verification</p>
-                <p class="text-text-secondary text-sm">SMS-based MFA via Twilio, AWS SNS, or Vonage</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
-              <div>
-                <p class="text-white text-sm font-medium">OAuth 2.0 & OIDC Providers</p>
-                <p class="text-text-secondary text-sm">Google, Microsoft, GitHub, and any OIDC-compliant provider (Authentik, Keycloak, Authelia, Zitadel). Link multiple providers to one account</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
-              <div>
-                <p class="text-white text-sm font-medium">SAML 2.0</p>
-                <p class="text-text-secondary text-sm">Enterprise SSO with Azure AD/Entra ID, Okta, OneLogin, and ADFS</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
-              <div>
-                <p class="text-white text-sm font-medium">LDAP / Active Directory</p>
-                <p class="text-text-secondary text-sm">Directory-based login with STARTTLS, group-based access control, auto-provisioning, and periodic background synchronization</p>
-              </div>
-            </div>
-            <div class="flex items-start gap-3">
-              <span class="w-2 h-2 rounded-full bg-primary mt-2 shrink-0"></span>
-              <div>
-                <p class="text-white text-sm font-medium">Password Breach Protection</p>
-                <p class="text-text-secondary text-sm">Passwords checked against HaveIBeenPwned using k-Anonymity. Real-time strength meter powered by zxcvbn on all password forms</p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
       <!-- Token & Session Security -->
-      <div class="mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><polyline points="9 12 11 14 15 10" /></svg>
-          Token & Session Security
-        </h3>
-        <div class="bg-dark-surface border border-dark-border rounded-xl p-6 space-y-3">
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Token Binding</p>
-              <p class="text-text-secondary text-sm">JWT tokens tied to originating IP and User-Agent via SHA-256 hash. Mismatched tokens trigger family-wide revocation and audit logging</p>
+      <div class="mb-16" data-animate>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-serif text-lg text-accent/30 select-none">03</span>
+          <h3 class="text-xl font-serif text-text-primary">Token & Session Security</h3>
+        </div>
+        <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6 space-y-4">
+          {[
+            { title: 'Token Binding', desc: 'JWT tokens tied to originating IP and User-Agent via SHA-256 hash. Mismatched tokens trigger family-wide revocation and audit logging' },
+            { title: 'Account Lockout', desc: 'Automatic lockout after repeated failed login attempts with configurable thresholds and durations' },
+            { title: 'Session Limits (OWASP A07)', desc: 'Configurable max concurrent sessions (oldest evicted) and absolute session timeout forcing re-authentication regardless of activity' },
+            { title: 'Impossible Travel Detection', desc: 'Haversine-based geo-velocity analysis flags login attempts requiring physically impossible travel speeds between consecutive sessions' },
+            { title: 'Rate Limiting', desc: 'Granular rate limits on login, registration, password reset, SMS, vault, session, and OAuth endpoints to prevent abuse' },
+          ].map(({ title, desc }) => (
+            <div class="flex items-start gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent/50 mt-2 shrink-0"></span>
+              <div>
+                <p class="text-text-primary text-sm font-medium">{title}</p>
+                <p class="text-text-secondary text-sm">{desc}</p>
+              </div>
             </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Account Lockout</p>
-              <p class="text-text-secondary text-sm">Automatic lockout after repeated failed login attempts with configurable thresholds and durations</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Session Limits (OWASP A07)</p>
-              <p class="text-text-secondary text-sm">Configurable max concurrent sessions (oldest evicted) and absolute session timeout forcing re-authentication regardless of activity</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Impossible Travel Detection</p>
-              <p class="text-text-secondary text-sm">Haversine-based geo-velocity analysis flags login attempts requiring physically impossible travel speeds between consecutive sessions</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Rate Limiting</p>
-              <p class="text-text-secondary text-sm">Granular rate limits on login, registration, password reset, SMS, vault, session, and OAuth endpoints to prevent abuse</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      <!-- Vault Security -->
-      <div class="mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-          Vault Protection
-        </h3>
-        <div class="bg-dark-surface border border-dark-border rounded-xl p-6 space-y-3">
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <p class="text-text-secondary text-sm">Auto-lock after configurable inactivity period (default: 30 minutes) with MFA re-unlock support</p>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <p class="text-text-secondary text-sm">Master keys zeroed in memory before deletion. Periodic cleanup catches expired sessions</p>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <p class="text-text-secondary text-sm">Password change automatically re-encrypts all vault contents with the new derived key</p>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <p class="text-text-secondary text-sm">Team vaults use per-team master keys encrypted with each member's personal key</p>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <p class="text-text-secondary text-sm">Recovery key generated during registration enables vault recovery if the user forgets their password</p>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <p class="text-text-secondary text-sm">Tenant admins can enforce a maximum auto-lock duration, capping what users can set</p>
-          </div>
+      <!-- Vault Protection -->
+      <div class="mb-16" data-animate>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-serif text-lg text-accent/30 select-none">04</span>
+          <h3 class="text-xl font-serif text-text-primary">Vault Protection</h3>
+        </div>
+        <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6 space-y-3">
+          {[
+            'Auto-lock after configurable inactivity period (default: 30 minutes) with MFA re-unlock support',
+            'Master keys zeroed in memory before deletion. Periodic cleanup catches expired sessions',
+            'Password change automatically re-encrypts all vault contents with the new derived key',
+            'Team vaults use per-team master keys encrypted with each member\'s personal key',
+            'Recovery key generated during registration enables vault recovery if the user forgets their password',
+            'Tenant admins can enforce a maximum auto-lock duration, capping what users can set',
+          ].map((item) => (
+            <div class="flex items-start gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent/50 mt-2 shrink-0"></span>
+              <p class="text-text-secondary text-sm">{item}</p>
+            </div>
+          ))}
         </div>
       </div>
 
       <!-- Data Loss Prevention -->
-      <div class="mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><line x1="9" y1="9" x2="15" y2="15" /><line x1="15" y1="9" x2="9" y2="15" /></svg>
-          Data Loss Prevention
-        </h3>
-        <div class="bg-dark-surface border border-dark-border rounded-xl p-6">
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+      <div class="mb-16" data-animate>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-serif text-lg text-accent/30 select-none">05</span>
+          <h3 class="text-xl font-serif text-text-primary">Data Loss Prevention</h3>
+        </div>
+        <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6 space-y-4">
+          <p class="text-text-secondary text-sm leading-relaxed">
             Tenant-level DLP policies control clipboard and file operations across SSH, RDP, and VNC sessions. Four controls are available: disable clipboard copy (remote to local), disable clipboard paste (local to remote), disable file download, and disable file upload. Per-connection overrides enforce most-restrictive rules.
           </p>
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+          <p class="text-text-secondary text-sm leading-relaxed">
             Browser-level exfiltration vectors are blocked: DevTools shortcuts, View Source, Save Page, Print, and drag-and-drop to external applications are all intercepted and suppressed.
           </p>
           <p class="text-text-secondary text-sm leading-relaxed">
@@ -213,16 +144,16 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
       </div>
 
       <!-- Audit -->
-      <div class="mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>
-          Audit & Monitoring
-        </h3>
-        <div class="bg-dark-surface border border-dark-border rounded-xl p-6">
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+      <div class="mb-16" data-animate>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-serif text-lg text-accent/30 select-none">06</span>
+          <h3 class="text-xl font-serif text-text-primary">Audit & Monitoring</h3>
+        </div>
+        <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6 space-y-4">
+          <p class="text-text-secondary text-sm leading-relaxed">
             Over 100 distinct audit action types track authentication events, connection usage, sharing activities, administrative operations, and session lifecycle events. Logs include client IP addresses with optional geographic location enrichment using MaxMind GeoLite2 data and interactive map visualization.
           </p>
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+          <p class="text-text-secondary text-sm leading-relaxed">
             Session monitoring allows administrators to view and terminate active remote sessions across the organization. Idle session detection automatically marks sessions as idle after configurable inactivity periods.
           </p>
           <p class="text-text-secondary text-sm leading-relaxed">
@@ -232,144 +163,68 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
       </div>
 
       <!-- Zero-Trust Tunnel Security -->
-      <div class="mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="M12 8v4" /><path d="M12 16h.01" /></svg>
-          Zero-Trust Tunnel Security
-        </h3>
-        <div class="bg-dark-surface border border-dark-border rounded-xl p-6 space-y-3">
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Outbound-Only Connections</p>
-              <p class="text-text-secondary text-sm">Tunnel agents initiate outbound connections only. No inbound firewall rules, port forwarding, or public IP addresses required on the target network</p>
+      <div class="mb-16" data-animate>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-serif text-lg text-accent/30 select-none">07</span>
+          <h3 class="text-xl font-serif text-text-primary">Zero-Trust Tunnel Security</h3>
+        </div>
+        <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6 space-y-4">
+          {[
+            { title: 'Outbound-Only Connections', desc: 'Tunnel agents initiate outbound connections only. No inbound firewall rules, port forwarding, or public IP addresses required on the target network' },
+            { title: 'Token-Based Authentication', desc: '256-bit cryptographically random tokens authenticate agents. Tokens are SHA-256 hashed server-side and verified using constant-time comparison to prevent timing attacks' },
+            { title: 'Encrypted Token Storage', desc: 'Agent tokens are encrypted at rest with AES-256-GCM using per-token initialization vectors, ensuring compromise of one token does not expose others' },
+            { title: 'Frame Size Limits', desc: 'WebSocket frames are capped at 1 MB maximum payload to prevent memory exhaustion and denial-of-service attacks against the tunnel server' },
+            { title: 'SSRF Prevention', desc: 'Agents restrict TCP connections to localhost only, preventing server-side request forgery. The server independently validates target host and port before routing traffic' },
+            { title: 'Heartbeat Throttling', desc: 'Agent heartbeat database writes are throttled to prevent resource abuse and excessive I/O from high-frequency keep-alive signals' },
+            { title: 'Audit Trail', desc: 'All tunnel connect and disconnect events are logged with client IP address and agent version for forensic analysis and compliance reporting' },
+            { title: 'Agent IP Restrictions', desc: 'Tenant-configurable CIDR allowlists restrict which IP addresses can establish agent connections, limiting tunnel access to trusted network ranges' },
+            { title: 'Token Lifecycle Management', desc: 'Automatic token rotation, maximum lifetime enforcement, and immediate revocation ensure compromised tokens have a bounded window of exposure' },
+          ].map(({ title, desc }) => (
+            <div class="flex items-start gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent/50 mt-2 shrink-0"></span>
+              <div>
+                <p class="text-text-primary text-sm font-medium">{title}</p>
+                <p class="text-text-secondary text-sm">{desc}</p>
+              </div>
             </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Token-Based Authentication</p>
-              <p class="text-text-secondary text-sm">256-bit cryptographically random tokens authenticate agents. Tokens are SHA-256 hashed server-side and verified using constant-time comparison to prevent timing attacks</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Encrypted Token Storage</p>
-              <p class="text-text-secondary text-sm">Agent tokens are encrypted at rest with AES-256-GCM using per-token initialization vectors, ensuring compromise of one token does not expose others</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Frame Size Limits</p>
-              <p class="text-text-secondary text-sm">WebSocket frames are capped at 1 MB maximum payload to prevent memory exhaustion and denial-of-service attacks against the tunnel server</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">SSRF Prevention</p>
-              <p class="text-text-secondary text-sm">Agents restrict TCP connections to localhost only, preventing server-side request forgery. The server independently validates target host and port before routing traffic</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Heartbeat Throttling</p>
-              <p class="text-text-secondary text-sm">Agent heartbeat database writes are throttled to prevent resource abuse and excessive I/O from high-frequency keep-alive signals</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Audit Trail</p>
-              <p class="text-text-secondary text-sm">All tunnel connect and disconnect events are logged with client IP address and agent version for forensic analysis and compliance reporting</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Agent IP Restrictions</p>
-              <p class="text-text-secondary text-sm">Tenant-configurable CIDR allowlists restrict which IP addresses can establish agent connections, limiting tunnel access to trusted network ranges</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Token Lifecycle Management</p>
-              <p class="text-text-secondary text-sm">Automatic token rotation, maximum lifetime enforcement, and immediate revocation ensure compromised tokens have a bounded window of exposure</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      <!-- Attribute-Based Access Control (ABAC) -->
-      <div class="mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
-          Attribute-Based Access Control (ABAC)
-        </h3>
-        <div class="bg-dark-surface border border-dark-border rounded-xl p-6 space-y-3">
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Policy-Based Session Gating</p>
-              <p class="text-text-secondary text-sm">ABAC policies are evaluated before every SSH, RDP, and VNC session. Access is granted only when all applicable policies pass their attribute checks</p>
+      <!-- ABAC -->
+      <div class="mb-16" data-animate>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-serif text-lg text-accent/30 select-none">08</span>
+          <h3 class="text-xl font-serif text-text-primary">Attribute-Based Access Control</h3>
+        </div>
+        <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6 space-y-4">
+          {[
+            { title: 'Policy-Based Session Gating', desc: 'ABAC policies are evaluated before every SSH, RDP, and VNC session. Access is granted only when all applicable policies pass their attribute checks' },
+            { title: 'Time Window Constraints', desc: 'UTC-based time window policies restrict session access to specific hours and days. Supports overnight windows spanning midnight with exclusive end boundaries' },
+            { title: 'Trusted Device Verification', desc: 'Policies can require WebAuthn credential verification at session time, ensuring connections originate only from registered trusted devices' },
+            { title: 'MFA Step-Up Requirement', desc: 'Session policies can enforce that multi-factor authentication was completed during the current login, preventing access from sessions that bypassed MFA' },
+            { title: 'Fail-Closed Design', desc: 'Malformed or unparseable policies always deny access. The system never fails open, ensuring misconfigurations result in denied sessions rather than unauthorized access' },
+            { title: 'Additive Evaluation', desc: 'All applicable policies are evaluated and must pass. When multiple policies apply, the most restrictive combination wins, providing defense in depth' },
+            { title: 'Audit Logging', desc: 'All policy denials are logged with the specific reason for rejection. Denial reasons are recorded for administrator review but never exposed to end users' },
+          ].map(({ title, desc }) => (
+            <div class="flex items-start gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent/50 mt-2 shrink-0"></span>
+              <div>
+                <p class="text-text-primary text-sm font-medium">{title}</p>
+                <p class="text-text-secondary text-sm">{desc}</p>
+              </div>
             </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Time Window Constraints</p>
-              <p class="text-text-secondary text-sm">UTC-based time window policies restrict session access to specific hours and days. Supports overnight windows spanning midnight with exclusive end boundaries</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Trusted Device Verification</p>
-              <p class="text-text-secondary text-sm">Policies can require WebAuthn credential verification at session time, ensuring connections originate only from registered trusted devices</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">MFA Step-Up Requirement</p>
-              <p class="text-text-secondary text-sm">Session policies can enforce that multi-factor authentication was completed during the current login, preventing access from sessions that bypassed MFA</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Fail-Closed Design</p>
-              <p class="text-text-secondary text-sm">Malformed or unparseable policies always deny access. The system never fails open, ensuring misconfigurations result in denied sessions rather than unauthorized access</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Additive Evaluation</p>
-              <p class="text-text-secondary text-sm">All applicable policies are evaluated and must pass. When multiple policies apply, the most restrictive combination wins, providing defense in depth</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="w-2 h-2 rounded-full bg-accent mt-2 shrink-0"></span>
-            <div>
-              <p class="text-white text-sm font-medium">Audit Logging</p>
-              <p class="text-text-secondary text-sm">All policy denials are logged with the specific reason for rejection. Denial reasons are recorded for administrator review but never exposed to end users</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      <!-- Self-hosted advantage -->
-      <div class="mb-12">
-        <h3 class="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><rect x="2" y="2" width="20" height="8" rx="2" ry="2" /><rect x="2" y="14" width="20" height="8" rx="2" ry="2" /><line x1="6" y1="6" x2="6.01" y2="6" /><line x1="6" y1="18" x2="6.01" y2="18" /></svg>
-          Self-Hosted Advantage
-        </h3>
-        <div class="bg-dark-surface border border-dark-border rounded-xl p-6">
+      <!-- Self-hosted -->
+      <div class="mb-16" data-animate>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-serif text-lg text-accent/30 select-none">09</span>
+          <h3 class="text-xl font-serif text-text-primary">Self-Hosted Advantage</h3>
+        </div>
+        <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6">
           <p class="text-text-secondary text-sm leading-relaxed">
             Arsenale is designed to run entirely on your own infrastructure. No data ever leaves your network. You maintain full control over your encryption keys, user data, connection credentials, and audit logs. Deploy with Docker or Docker Compose on any Linux server. Both Docker and Podman are supported, including rootless Podman configurations.
           </p>
@@ -377,15 +232,18 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
       </div>
 
       <!-- Report vulnerability -->
-      <div class="text-center">
-        <p class="text-text-secondary text-sm mb-4">Found a security issue?</p>
+      <div class="text-center" data-animate>
+        <div class="section-dot-divider mb-10 max-w-xs mx-auto">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent/40"></span>
+        </div>
+        <p class="text-text-secondary text-sm mb-5">Found a security issue?</p>
         <a
           href="https://github.com/dnviti/arsenale/blob/main/SECURITY.md"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-dark-surface-light border border-dark-border hover:border-primary/50 rounded-lg transition-all"
+          class="inline-flex items-center gap-2.5 px-6 py-3 text-sm font-semibold text-text-secondary bg-dark-surface border border-dark-border hover:border-accent/30 hover:text-text-primary rounded-lg transition-all duration-300"
         >
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
           Report a Vulnerability
         </a>
       </div>

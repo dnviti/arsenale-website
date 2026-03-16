@@ -3,54 +3,54 @@ import { Image } from 'astro:assets';
 import iconImg from '../assets/icon.png';
 ---
 
-<footer class="bg-dark-surface border-t border-dark-border">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<footer class="border-t border-dark-border/60">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
       <!-- Brand -->
-      <div>
-        <a href="/" class="flex items-center gap-3 mb-4">
-          <Image src={iconImg} alt="Arsenale logo" width={32} height={32} class="rounded" />
-          <span class="text-lg font-bold text-white">Arsenale</span>
+      <div class="md:col-span-5">
+        <a href="/" class="flex items-center gap-3 mb-5">
+          <Image src={iconImg} alt="Arsenale logo" width={28} height={28} class="rounded" />
+          <span class="text-lg font-serif text-text-primary">Arsenale</span>
         </a>
-        <p class="text-text-secondary text-sm leading-relaxed">
+        <p class="text-text-secondary text-sm leading-relaxed max-w-xs">
           Source-available, self-hosted Privileged Access Manager.<br />
           SSH and RDP in your browser.
         </p>
       </div>
 
-      <!-- Links -->
-      <div>
-        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Navigation</h3>
-        <ul class="space-y-2">
-          <li><a href="/" class="text-sm text-text-secondary hover:text-primary transition-colors">Home</a></li>
-          <li><a href="/features/" class="text-sm text-text-secondary hover:text-primary transition-colors">Features</a></li>
-          <li><a href="/demo/" class="text-sm text-text-secondary hover:text-primary transition-colors">Demo</a></li>
-          <li><a href="/security/" class="text-sm text-text-secondary hover:text-primary transition-colors">Security</a></li>
-          <li><a href="/docs/" class="text-sm text-text-secondary hover:text-primary transition-colors">Docs</a></li>
+      <!-- Navigation -->
+      <div class="md:col-span-3">
+        <h3 class="text-[11px] font-semibold text-text-muted uppercase tracking-[0.15em] mb-5">Navigation</h3>
+        <ul class="space-y-2.5">
+          <li><a href="/" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">Home</a></li>
+          <li><a href="/features/" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">Features</a></li>
+          <li><a href="/demo/" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">Demo</a></li>
+          <li><a href="/security/" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">Security</a></li>
+          <li><a href="/docs/" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">Docs</a></li>
         </ul>
       </div>
 
       <!-- Project -->
-      <div>
-        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">Project</h3>
-        <ul class="space-y-2">
+      <div class="md:col-span-4">
+        <h3 class="text-[11px] font-semibold text-text-muted uppercase tracking-[0.15em] mb-5">Project</h3>
+        <ul class="space-y-2.5">
           <li>
-            <a href="https://github.com/dnviti/arsenale" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-primary transition-colors">
+            <a href="https://github.com/dnviti/arsenale" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
               GitHub Repository
             </a>
           </li>
           <li>
-            <a href="https://github.com/dnviti/arsenale/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-primary transition-colors">
+            <a href="https://github.com/dnviti/arsenale/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
               Contributing
             </a>
           </li>
           <li>
-            <a href="https://github.com/dnviti/arsenale/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-primary transition-colors">
+            <a href="https://github.com/dnviti/arsenale/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
               Report Vulnerability
             </a>
           </li>
           <li>
-            <a href="https://github.com/dnviti/arsenale/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-primary transition-colors">
+            <a href="https://github.com/dnviti/arsenale/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
               BSL 1.1 License
             </a>
           </li>
@@ -58,12 +58,12 @@ import iconImg from '../assets/icon.png';
       </div>
     </div>
 
-    <div class="mt-10 pt-6 border-t border-dark-border flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="mt-14 pt-6 border-t border-dark-border/40 flex flex-col sm:flex-row items-center justify-between gap-4">
       <p class="text-xs text-text-muted">
         &copy; {new Date().getFullYear()} Arsenale. All rights reserved.
       </p>
       <p class="text-xs text-text-muted">
-        Made by <a href="https://github.com/dnviti" target="_blank" rel="noopener noreferrer" class="text-text-secondary hover:text-primary transition-colors">dnviti</a>
+        Made by <a href="https://github.com/dnviti" target="_blank" rel="noopener noreferrer" class="text-text-secondary hover:text-accent transition-colors duration-300">dnviti</a>
       </p>
     </div>
   </div>

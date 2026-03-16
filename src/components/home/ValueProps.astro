@@ -1,33 +1,47 @@
 ---
 const props = [
   {
-    icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>',
+    number: '01',
+    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>',
     title: 'Browser-Based Access',
     description: 'SSH terminals and RDP desktops directly in your browser. No client software, no VPN, no hassle.',
   },
   {
-    icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>',
+    number: '02',
+    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>',
     title: 'Zero-Trust Security',
     description: 'AES-256-GCM encrypted vault with Argon2id key derivation. Attribute-based access control and outbound-only tunnels eliminate exposed ports.',
   },
   {
-    icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2" /><rect x="2" y="14" width="20" height="8" rx="2" ry="2" /><line x1="6" y1="6" x2="6.01" y2="6" /><line x1="6" y1="18" x2="6.01" y2="18" /></svg>',
+    number: '03',
+    icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2" /><rect x="2" y="14" width="20" height="8" rx="2" ry="2" /><line x1="6" y1="6" x2="6.01" y2="6" /><line x1="6" y1="18" x2="6.01" y2="18" /></svg>',
     title: 'Self-Hosted Control',
     description: 'Your infrastructure, your data, your rules. Deploy with Docker on any server you control.',
   },
 ];
 ---
 
-<section class="py-20 bg-dark-surface/50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {props.map(({ icon, title, description }) => (
-        <div class="text-center p-8">
-          <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 text-primary">
-            <Fragment set:html={icon} />
+<section class="py-24 sm:py-32">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-0">
+      {props.map(({ number, icon, title, description }, i) => (
+        <div
+          class:list={[
+            'relative p-8 sm:p-10',
+            i < 2 && 'md:border-r md:border-dark-border/60',
+            i > 0 && 'border-t md:border-t-0 border-dark-border/60',
+          ]}
+          data-animate
+          data-delay={String(i + 1)}
+        >
+          <div class="flex items-center gap-4 mb-5">
+            <span class="font-serif text-2xl text-accent/25 select-none">{number}</span>
+            <div class="w-10 h-10 rounded-lg bg-accent/8 flex items-center justify-center text-accent">
+              <Fragment set:html={icon} />
+            </div>
           </div>
-          <h3 class="text-xl font-semibold text-white mb-3">{title}</h3>
-          <p class="text-text-secondary leading-relaxed">{description}</p>
+          <h3 class="text-lg font-serif text-text-primary mb-3">{title}</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">{description}</p>
         </div>
       ))}
     </div>

@@ -1,13 +1,13 @@
 <!-- Chat Toggle Button -->
 <button
   id="chat-toggle"
-  class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition-all flex items-center justify-center hover:scale-105"
+  class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-accent text-dark-bg shadow-lg shadow-accent/20 hover:bg-accent-dim transition-all duration-300 flex items-center justify-center hover:scale-105"
   aria-label="Open chat assistant"
 >
-  <svg id="chat-icon-open" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg id="chat-icon-open" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
   </svg>
-  <svg id="chat-icon-close" class="hidden" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg id="chat-icon-close" class="hidden" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <line x1="18" y1="6" x2="6" y2="18" />
     <line x1="6" y1="6" x2="18" y2="18" />
   </svg>
@@ -16,7 +16,7 @@
 <!-- Chat Panel -->
 <div
   id="chat-panel"
-  class="hidden fixed bottom-24 right-6 z-50 bg-dark-surface border border-dark-border rounded-xl shadow-2xl flex flex-col overflow-hidden"
+  class="hidden fixed bottom-24 right-6 z-50 bg-dark-surface border border-dark-border/60 rounded-xl shadow-2xl shadow-black/40 flex flex-col overflow-hidden"
   style="width: 384px; height: 512px;"
 >
   <!-- Resize handles -->
@@ -25,13 +25,13 @@
   <div id="resize-corner" class="absolute top-0 left-0 w-3 h-3 cursor-nw-resize z-20"></div>
 
   <!-- Header -->
-  <div class="flex items-center justify-between px-4 py-3 bg-dark-surface-light border-b border-dark-border shrink-0">
+  <div class="flex items-center justify-between px-4 py-3 bg-dark-raised border-b border-dark-border/60 shrink-0">
     <div class="flex items-center gap-2">
-      <div class="w-2 h-2 rounded-full bg-green-400"></div>
-      <h3 class="text-sm font-semibold text-white">Arsenale Docs Assistant</h3>
+      <div class="w-2 h-2 rounded-full bg-accent/60"></div>
+      <h3 class="text-sm font-medium text-text-primary">Arsenale Docs Assistant</h3>
     </div>
-    <button id="chat-close" class="p-1 text-text-muted hover:text-white transition-colors" aria-label="Close chat">
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <button id="chat-close" class="p-1 text-text-muted hover:text-text-primary transition-colors duration-300" aria-label="Close chat">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="6" x2="6" y2="18" />
         <line x1="6" y1="6" x2="18" y2="18" />
       </svg>
@@ -41,28 +41,28 @@
   <!-- Messages -->
   <div id="chat-messages" class="flex-1 overflow-y-auto px-4 py-4 space-y-4">
     <div class="flex justify-start">
-      <div class="max-w-[85%] rounded-lg px-3 py-2 text-sm bg-dark-surface-light text-text-primary whitespace-pre-wrap">
+      <div class="max-w-[85%] rounded-lg px-3 py-2 text-sm bg-dark-raised text-text-primary whitespace-pre-wrap">
         Hi! I'm the Arsenale documentation assistant. Ask me anything about Arsenale's architecture, API, deployment, security, and more.
       </div>
     </div>
   </div>
 
   <!-- Input -->
-  <div class="shrink-0 px-4 py-3 border-t border-dark-border bg-dark-surface">
+  <div class="shrink-0 px-4 py-3 border-t border-dark-border/60 bg-dark-surface">
     <form id="chat-form" class="flex gap-2">
       <input
         id="chat-input"
         type="text"
         placeholder="Ask about Arsenale..."
         autocomplete="off"
-        class="flex-1 px-3 py-2 text-sm bg-dark-bg border border-dark-border rounded-lg text-text-primary placeholder-text-muted focus:outline-none focus:border-primary/50 transition-colors"
+        class="flex-1 px-3 py-2 text-sm bg-dark-bg border border-dark-border/60 rounded-lg text-text-primary placeholder-text-muted focus:outline-none focus:border-accent/40 transition-colors duration-300"
       />
       <button
         type="submit"
         id="chat-send"
-        class="px-3 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        class="px-3 py-2 bg-accent text-dark-bg text-sm font-medium rounded-lg hover:bg-accent-dim transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="22" y1="2" x2="11" y2="13" />
           <polygon points="22 2 15 22 11 13 2 9 22 2" />
         </svg>
@@ -190,8 +190,8 @@
     const bubble = document.createElement('div');
     bubble.className = `max-w-[85%] rounded-lg px-3 py-2 text-sm whitespace-pre-wrap ${
       role === 'user'
-        ? 'bg-primary/20 text-text-primary'
-        : 'bg-dark-surface-light text-text-primary'
+        ? 'bg-accent/15 text-text-primary'
+        : 'bg-dark-raised text-text-primary'
     }`;
 
     bubble.textContent = content;
@@ -208,7 +208,7 @@
     wrapper.id = 'chat-loading';
 
     const bubble = document.createElement('div');
-    bubble.className = 'max-w-[85%] rounded-lg px-3 py-2 text-sm bg-dark-surface-light text-text-primary';
+    bubble.className = 'max-w-[85%] rounded-lg px-3 py-2 text-sm bg-dark-raised text-text-primary';
     bubble.innerHTML = '<span class="inline-flex gap-1"><span class="animate-bounce" style="animation-delay:0ms">.</span><span class="animate-bounce" style="animation-delay:150ms">.</span><span class="animate-bounce" style="animation-delay:300ms">.</span></span>';
 
     wrapper.appendChild(bubble);
@@ -342,6 +342,6 @@
   #resize-top:hover,
   #resize-left:hover,
   #resize-corner:hover {
-    background: rgba(33, 150, 243, 0.15);
+    background: rgba(0, 229, 160, 0.08);
   }
 </style>

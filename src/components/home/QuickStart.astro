@@ -20,31 +20,36 @@ const steps = [
 ];
 ---
 
-<section class="py-20 bg-dark-surface/50">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    <SectionHeading
-      title="Up and Running in Minutes"
-      subtitle="Three steps to deploy your own Privileged Access Manager"
-    />
+<section class="py-24 sm:py-32 relative">
+  <div class="absolute inset-0 bg-dark-raised/40 pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div data-animate>
+      <SectionHeading
+        title="Up and Running in Minutes"
+        subtitle="Three steps to deploy your own Privileged Access Manager"
+        number="02"
+      />
+    </div>
 
     <div class="flex flex-col gap-6">
-      {steps.map(({ number, title, code }) => (
-        <div class="bg-dark-bg border border-dark-border rounded-xl p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="w-8 h-8 rounded-full bg-primary/20 text-primary text-sm font-bold flex items-center justify-center">
+      {steps.map(({ number, title, code }, i) => (
+        <div class="bg-dark-bg border border-dark-border/60 rounded-xl p-6" data-animate data-delay={String(i + 1)}>
+          <div class="flex items-center gap-4 mb-4">
+            <span class="w-9 h-9 rounded-lg bg-accent/10 text-accent text-sm font-mono font-medium flex items-center justify-center">
               {number}
             </span>
-            <h3 class="text-lg font-semibold text-white">{title}</h3>
+            <h3 class="text-lg font-serif text-text-primary">{title}</h3>
           </div>
           <div class="relative group">
-            <pre class="bg-dark-surface rounded-lg p-4 pr-12 text-sm text-text-secondary"><code>{code}</code></pre>
+            <pre class="bg-dark-surface/80 rounded-lg p-4 pr-12 text-sm text-text-secondary font-mono leading-relaxed"><code>{code}</code></pre>
             <button
-              class="copy-btn absolute top-3 right-3 p-1.5 rounded-md bg-dark-border/50 text-text-secondary hover:text-white hover:bg-dark-border transition-colors opacity-0 group-hover:opacity-100"
+              class="copy-btn absolute top-3 right-3 p-1.5 rounded-md bg-dark-border/40 text-text-muted hover:text-accent hover:bg-dark-border/60 transition-all duration-300 opacity-0 group-hover:opacity-100"
               data-code={code}
               aria-label="Copy to clipboard"
             >
-              <svg class="copy-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              <svg class="check-icon hidden" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg class="copy-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="check-icon hidden" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </button>
           </div>
         </div>
