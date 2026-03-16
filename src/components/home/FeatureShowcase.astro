@@ -5,64 +5,76 @@ const features = [
   {
     title: 'SSH Terminal',
     description: 'Full-featured terminal sessions powered by XTerm.js with real-time I/O via WebSocket. Customize fonts, colors, cursor styles, and choose from 9 color themes. Built-in SFTP file browser for seamless file transfers.',
-    icon: '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></svg>',
+    icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5" /><line x1="12" y1="19" x2="20" y2="19" /></svg>',
   },
   {
     title: 'RDP Remote Desktop',
     description: 'Access Windows desktops through Apache Guacamole with configurable quality presets, color depth, resolution, DPI, and audio settings. Drive redirection enables file transfers between your browser and the remote machine.',
-    icon: '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>',
+    icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg>',
   },
   {
     title: 'Encrypted Credential Vault',
     description: 'All credentials are encrypted at rest with AES-256-GCM using keys derived from your master password via Argon2id. The vault auto-locks after inactivity, and your master key is never stored on the server.',
-    icon: '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>',
+    icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>',
   },
   {
     title: 'Team Collaboration',
     description: 'Multi-tenant architecture with organizations and teams. Share connections with granular permissions (read-only or full access). Team vaults let members access shared credentials securely.',
-    icon: '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>',
+    icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>',
   },
   {
     title: 'Security & MFA',
     description: 'Two-factor authentication with TOTP, SMS, and WebAuthn/Passkeys. OAuth integration with Google, Microsoft, GitHub, and generic OIDC providers. Comprehensive audit logging tracks every action.',
-    icon: '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>',
+    icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>',
   },
   {
     title: 'Zero-Trust Tunneling',
     description: 'Connect to remote networks through outbound-only WebSocket tunnels. No inbound ports, no VPN. Embedded agents in gateway containers with automatic health monitoring.',
-    icon: '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>',
+    icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>',
   },
   {
     title: 'File Transfer',
     description: 'SFTP file browser for SSH sessions with upload, download, mkdir, rename, and delete operations. RDP drive redirection for seamless file exchange. Transfer queue with progress tracking.',
-    icon: '<svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>',
+    icon: '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>',
   },
 ];
 ---
 
-<section class="py-20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <SectionHeading
-      title="Everything You Need"
-      subtitle="A complete toolkit for managing remote access across your infrastructure"
-    />
+<section class="py-24 sm:py-32 relative">
+  <!-- Subtle background texture -->
+  <div class="absolute inset-0 bg-dark-raised/40 pointer-events-none" aria-hidden="true"></div>
 
-    <div class="space-y-16">
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div data-animate>
+      <SectionHeading
+        title="Everything You Need"
+        subtitle="A complete toolkit for managing remote access across your infrastructure"
+        number="01"
+      />
+    </div>
+
+    <div class="space-y-20">
       {features.map((feature, i) => (
-        <div class:list={[
-          'flex flex-col md:flex-row items-center gap-8 md:gap-12',
-          i % 2 === 1 && 'md:flex-row-reverse',
-        ]}>
+        <div
+          class:list={[
+            'flex flex-col md:flex-row items-start gap-8 md:gap-14',
+            i % 2 === 1 && 'md:flex-row-reverse',
+          ]}
+          data-animate
+        >
           <!-- Icon block -->
           <div class="flex-shrink-0">
-            <div class="w-24 h-24 rounded-2xl bg-dark-surface border border-dark-border flex items-center justify-center text-primary">
+            <div class="w-20 h-20 rounded-2xl bg-dark-surface border border-dark-border/60 flex items-center justify-center text-accent">
               <Fragment set:html={feature.icon} />
             </div>
           </div>
 
           <!-- Text block -->
-          <div class="text-center md:text-left max-w-xl">
-            <h3 class="text-2xl font-bold text-white mb-3">{feature.title}</h3>
+          <div class:list={[
+            'max-w-xl',
+            i % 2 === 1 ? 'md:text-right' : 'md:text-left',
+          ]}>
+            <h3 class="text-2xl font-serif text-text-primary mb-3">{feature.title}</h3>
             <p class="text-text-secondary leading-relaxed">{feature.description}</p>
           </div>
         </div>
