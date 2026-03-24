@@ -89,6 +89,7 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
             { title: 'Session Limits (OWASP A07)', desc: 'Configurable max concurrent sessions (oldest evicted) and absolute session timeout forcing re-authentication regardless of activity' },
             { title: 'Impossible Travel Detection', desc: 'Haversine-based geo-velocity analysis flags login attempts requiring physically impossible travel speeds between consecutive sessions' },
             { title: 'Rate Limiting', desc: 'Granular rate limits on login, registration, password reset, SMS, vault, session, and OAuth endpoints to prevent abuse' },
+            { title: 'Lateral Movement Detection', desc: 'MITRE T1021-based anomaly detection identifies unusual cross-system access patterns, flagging potential lateral movement attempts with configurable alerting thresholds' },
           ].map(({ title, desc }) => (
             <div class="flex items-start gap-3">
               <span class="w-1.5 h-1.5 rounded-full bg-accent/50 mt-2 shrink-0"></span>
@@ -115,6 +116,8 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
             'Team vaults use per-team master keys encrypted with each member\'s personal key',
             'Recovery key generated during registration enables vault recovery if the user forgets their password',
             'Tenant admins can enforce a maximum auto-lock duration, capping what users can set',
+            'Credential check-out/check-in workflow requires approval before accessing sensitive credentials. Time-limited access with automatic revocation on expiry',
+            'Automatic password rotation on target systems after credential check-in or on a configurable schedule, ensuring credentials are never stale',
           ].map((item) => (
             <div class="flex items-start gap-3">
               <span class="w-1.5 h-1.5 rounded-full bg-accent/50 mt-2 shrink-0"></span>
@@ -158,6 +161,9 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
           </p>
           <p class="text-text-secondary text-sm leading-relaxed">
             Session recording captures SSH terminals (asciicast format) and RDP/VNC sessions (Guacamole format) with in-browser playback, command extraction, and video export. Configurable retention with automatic cleanup.
+          </p>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Real-time SSH keystroke inspection monitors and alerts on keystrokes during active sessions. Configurable alerting rules detect suspicious command patterns, enabling immediate response to potential threats.
           </p>
         </div>
       </div>
@@ -228,6 +234,30 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
           <p class="text-text-secondary text-sm leading-relaxed">
             Arsenale is designed to run entirely on your own infrastructure. No data ever leaves your network. You maintain full control over your encryption keys, user data, connection credentials, and audit logs. Deploy with Docker or Docker Compose on any Linux server. Both Docker and Podman are supported, including rootless Podman configurations.
           </p>
+        </div>
+      </div>
+
+      <!-- Database Security -->
+      <div class="mb-16" data-animate>
+        <div class="flex items-center gap-4 mb-6">
+          <span class="font-serif text-lg text-accent/30 select-none">10</span>
+          <h3 class="text-xl font-serif text-text-primary">Database Security</h3>
+        </div>
+        <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6 space-y-4">
+          {[
+            { title: 'SQL Query Rate Limiting', desc: 'Configurable per-user and per-tenant query rate limits prevent abuse and protect database resources from excessive or malicious query patterns' },
+            { title: 'Query Auditing', desc: 'All SQL queries executed through the database client are logged with full attribution, enabling forensic analysis and compliance reporting' },
+            { title: 'AI Query Controls', desc: 'AI-assisted SQL generation includes a table approval workflow ensuring generated queries only access explicitly authorized tables and schemas' },
+            { title: 'Database Session Isolation', desc: 'Per-connection session configuration with isolated parameters prevents cross-contamination between database sessions and enforces least-privilege access' },
+          ].map(({ title, desc }) => (
+            <div class="flex items-start gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-accent/50 mt-2 shrink-0"></span>
+              <div>
+                <p class="text-text-primary text-sm font-medium">{title}</p>
+                <p class="text-text-secondary text-sm">{desc}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
