@@ -5,8 +5,8 @@
   "private": true,
   "license": "BUSL-1.1",
   "scripts": {
-    "predev": "node scripts/fetch-docs.mjs",
-    "prebuild": "node scripts/fetch-docs.mjs",
+    "predev": "node scripts/sync-project-info.mjs && node scripts/fetch-docs.mjs",
+    "prebuild": "node scripts/sync-project-info.mjs && node scripts/fetch-docs.mjs",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",

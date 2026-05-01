@@ -1,25 +1,18 @@
 ---
-const techs = [
-  { name: 'React', color: '#61DAFB' },
-  { name: 'Express.js', color: '#f4f4f5' },
-  { name: 'PostgreSQL', color: '#4169E1' },
-  { name: 'Docker', color: '#2496ED' },
-  { name: 'Socket.IO', color: '#f4f4f5' },
-  { name: 'Guacamole', color: '#4CAF50' },
-  { name: 'Monaco', color: '#007ACC' },
-  { name: 'TypeScript', color: '#3178C6' },
-  { name: 'Prisma', color: '#5A67D8' },
-];
+import projectInfo from '../../data/project-info.json';
+
+const colors = ['#00ADD8', '#61DAFB', '#4169E1', '#4CAF50', '#007ACC', '#E24E1B', '#f4f4f5'];
 ---
 
 <section class="py-14 border-y border-dark-border/40">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <p class="text-center text-[11px] text-text-muted uppercase tracking-[0.2em] mb-8">Built With</p>
+    <p class="text-center text-[11px] text-text-muted uppercase tracking-[0.2em] mb-8">Current Runtime Stack</p>
     <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-      {techs.map(({ name, color }) => (
+      {projectInfo.stack.map(({ name, detail }, index) => (
         <span
           class="text-[13px] font-medium px-4 py-2 rounded-lg bg-dark-surface/60 border border-dark-border/50 text-text-secondary hover:text-text-primary hover:border-dark-border transition-all duration-300"
-          style={`border-left: 2px solid ${color}`}
+          style={`border-left: 2px solid ${colors[index % colors.length]}`}
+          title={detail}
         >
           {name}
         </span>

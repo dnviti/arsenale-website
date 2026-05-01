@@ -1,21 +1,22 @@
 ---
 import SectionHeading from '../shared/SectionHeading.astro';
+import projectInfo from '../../data/project-info.json';
 
 const steps = [
   {
     number: '1',
-    title: 'Clone',
-    code: 'git clone https://github.com/dnviti/arsenale.git\ncd arsenale',
+    title: 'Prepare',
+    code: 'git clone https://github.com/dnviti/arsenale.git\ncd arsenale\nnpm install\nmake setup',
   },
   {
     number: '2',
-    title: 'Configure',
-    code: 'cp .env.example .env\n# Edit .env with your settings',
+    title: 'Develop',
+    code: 'make dev\n# Optional local Vite client\nnpm run dev:client',
   },
   {
     number: '3',
     title: 'Deploy',
-    code: 'docker compose up -d',
+    code: 'make deploy\nmake status',
   },
 ];
 ---
@@ -26,8 +27,8 @@ const steps = [
   <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
     <div data-animate>
       <SectionHeading
-        title="Up and Running in Minutes"
-        subtitle="Three steps to deploy your own Privileged Access Manager"
+        title="Installer-First Operations"
+        subtitle={`${projectInfo.deployment.installer}. Development runs on Podman; production targets ${projectInfo.deployment.productionBackends.join(' or ')}.`}
         number="02"
       />
     </div>

@@ -1,6 +1,14 @@
 ---
 import { Image } from 'astro:assets';
 import logoImg from '../../assets/logo-transparent.png';
+import projectInfo from '../../data/project-info.json';
+
+const releaseDateLabel = new Date(`${projectInfo.releaseDate}T00:00:00Z`).toLocaleDateString('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
 ---
 
 <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -45,8 +53,8 @@ import logoImg from '../../assets/logo-transparent.png';
 
     <!-- Subtitle -->
     <p class="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-12 leading-relaxed" data-animate data-delay="2">
-      Source-available, self-hosted Privileged Access Manager.
-      SSH terminals and RDP desktops in your browser, with enterprise-grade encryption.
+      Source-available, self-hosted Privileged Access Manager with Go runtime services.
+      SSH, RDP, VNC, database access, encrypted vaults, and installer-owned deployments.
     </p>
 
     <!-- CTAs -->
@@ -59,7 +67,7 @@ import logoImg from '../../assets/logo-transparent.png';
         Try the Demo
       </a>
       <a
-        href="https://github.com/dnviti/arsenale"
+        href={projectInfo.repositoryUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center gap-2.5 px-8 py-3.5 text-[15px] font-semibold text-text-secondary bg-dark-surface border border-dark-border hover:border-accent/30 hover:text-text-primary rounded-lg transition-all duration-300"
@@ -75,18 +83,20 @@ import logoImg from '../../assets/logo-transparent.png';
         Privileged Access Manager
       </span>
       <a
-        id="release-version-hero"
-        href="https://github.com/dnviti/arsenale/releases"
+        href={`${projectInfo.repositoryUrl}/releases/tag/${projectInfo.releaseTag}`}
         target="_blank"
         rel="noopener noreferrer"
-        class="hidden items-center gap-1.5 px-4 py-1.5 text-[11px] font-mono font-medium text-text-secondary bg-dark-surface border border-dark-border rounded-full hover:border-accent/30 hover:text-accent transition-all duration-300"
+        class="inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-mono font-medium text-text-secondary bg-dark-surface border border-dark-border rounded-full hover:border-accent/30 hover:text-accent transition-all duration-300"
       >
         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
           <line x1="7" y1="7" x2="7.01" y2="7" />
         </svg>
-        <span id="release-version-hero-text"></span>
+        <span>{projectInfo.releaseTag} · {releaseDateLabel}</span>
       </a>
+      <span class="inline-flex items-center gap-2 px-4 py-1.5 text-[11px] font-medium text-text-secondary bg-dark-surface border border-dark-border rounded-full">
+        Go-first runtime
+      </span>
     </div>
   </div>
 

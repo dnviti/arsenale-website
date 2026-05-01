@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SectionHeading from '../components/shared/SectionHeading.astro';
+import projectInfo from '../data/project-info.json';
 ---
 
 <BaseLayout
   title="Security — Arsenale Privileged Access Manager"
-  description="Learn about Arsenale's security architecture: AES-256-GCM encryption, Argon2id key derivation, multi-factor authentication, audit logging, and self-hosted deployment."
+  description={`Learn about Arsenale ${projectInfo.releaseTag} security: AES-256-GCM encryption, Argon2id key derivation, MFA, audit logging, zero-trust tunnels, and installer-managed self-hosted deployment.`}
   canonicalPath="/security/"
 >
   <section class="pt-32 pb-24">
@@ -176,7 +177,7 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
         </div>
         <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6 space-y-4">
           {[
-            { title: 'Outbound-Only Connections', desc: 'Tunnel agents initiate outbound connections only. No inbound firewall rules, port forwarding, or public IP addresses required on the target network' },
+            { title: 'Outbound-Only Connections', desc: 'Go tunnel agents initiate outbound connections only. No inbound firewall rules, port forwarding, or public IP addresses required on the target network' },
             { title: 'Token-Based Authentication', desc: '256-bit cryptographically random tokens authenticate agents. Tokens are SHA-256 hashed server-side and verified using constant-time comparison to prevent timing attacks' },
             { title: 'Encrypted Token Storage', desc: 'Agent tokens are encrypted at rest with AES-256-GCM using per-token initialization vectors, ensuring compromise of one token does not expose others' },
             { title: 'Frame Size Limits', desc: 'WebSocket frames are capped at 1 MB maximum payload to prevent memory exhaustion and denial-of-service attacks against the tunnel server' },
@@ -232,7 +233,7 @@ import SectionHeading from '../components/shared/SectionHeading.astro';
         </div>
         <div class="bg-dark-surface/60 border border-dark-border/60 rounded-xl p-6">
           <p class="text-text-secondary text-sm leading-relaxed">
-            Arsenale is designed to run entirely on your own infrastructure. No data ever leaves your network. You maintain full control over your encryption keys, user data, connection credentials, and audit logs. Deploy with Docker or Docker Compose on any Linux server. Both Docker and Podman are supported, including rootless Podman configurations.
+            Arsenale is designed to run entirely on your own infrastructure. No data ever leaves your network. You maintain full control over encryption keys, user data, connection credentials, and audit logs. Production deployment is installer-managed through Podman Compose or Kubernetes via Helm, with encrypted installer state and status reads through <span class="font-mono text-text-primary">make status</span>. Docker is not an official installer backend.
           </p>
         </div>
       </div>

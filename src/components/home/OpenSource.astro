@@ -1,4 +1,5 @@
 ---
+import projectInfo from '../../data/project-info.json';
 ---
 
 <section class="py-24 sm:py-32">
@@ -9,13 +10,13 @@
         Source Available
       </h2>
       <p class="text-base sm:text-lg text-text-secondary mb-10 max-w-xl mx-auto leading-relaxed">
-        Arsenale is licensed under BSL 1.1 &mdash; free for personal use, converting to GPL v3 after 3 years. Inspect the code, contribute features, report issues, or fork it and make it your own.
+        Arsenale {projectInfo.releaseTag} is licensed under BSL 1.1 with GPL v3 as the change license. Inspect the Go services, React client, installer, gateways, CLI, and browser extension in the public repository.
       </p>
     </div>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4" data-animate data-delay="1">
       <a
-        href="https://github.com/dnviti/arsenale"
+        href={projectInfo.repositoryUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-text-secondary bg-dark-surface border border-dark-border hover:border-accent/30 hover:text-text-primary rounded-lg transition-all duration-300"
@@ -31,7 +32,7 @@
         Read the Docs
       </a>
       <a
-        href="https://github.com/dnviti/arsenale/issues"
+        href={`${projectInfo.repositoryUrl}/issues`}
         target="_blank"
         rel="noopener noreferrer"
         class="inline-flex items-center gap-2.5 px-6 py-3 text-[15px] font-semibold text-text-secondary hover:text-accent transition-colors duration-300"

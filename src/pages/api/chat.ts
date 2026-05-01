@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import Anthropic from '@anthropic-ai/sdk';
 import docsBundle from '../../data/docs-bundle.json';
+import projectInfo from '../../data/project-info.json';
 
 export const prerender = false;
 
@@ -42,6 +43,21 @@ function buildSystemPrompt(): string {
   const docSections = Object.entries(docsBundle as Record<string, string>)
     .map(([key, content]) => `## ${key.charAt(0).toUpperCase() + key.slice(1)}\n\n${content}`)
     .join('\n\n---\n\n');
+  const defaultCapabilities = projectInfo.capabilities
+    .filter((capability) => capability.state !== 'optional')
+    .map((capability) => capability.title)
+    .join(', ');
+  const optionalCapabilities = projectInfo.capabilities
+    .filter((capability) => capability.state === 'optional')
+    .map((capability) => capability.title)
+    .join(', ') || 'none';
+  const currentSnapshot = [
+    `Version: ${projectInfo.releaseTag} released ${projectInfo.releaseDate}.`,
+    `Runtime status: ${projectInfo.status.headline}. ${projectInfo.status.points.join(' ')}`,
+    `Production deployment: ${projectInfo.deployment.installer}; production backends are ${projectInfo.deployment.productionBackends.join(' or ')}. Docker is not an official installer backend.`,
+    `Enabled or required installer capabilities: ${defaultCapabilities}. Optional capabilities: ${optionalCapabilities}.`,
+    `Latest release highlights: ${projectInfo.latestRelease.highlights.join(' ')}`,
+  ].join('\n');
 
   return `You are Arsenale Documentation Assistant. You answer questions ONLY about the Arsenale project based on the documentation provided below.
 
@@ -54,7 +70,8 @@ STRICT OUTPUT RULES:
 
 CONTENT RULES:
 - Only answer questions about Arsenale or comparisons between Arsenale and other products. Politely decline completely unrelated questions.
-- Be concise and accurate. Use the provided documentation for Arsenale-specific details. Do not invent Arsenale features not in the documentation.
+- Be concise and accurate. Use the current snapshot and provided documentation for Arsenale-specific details. Do not invent Arsenale features not in the documentation.
+- Treat the current snapshot as newer than the bundled documentation if they conflict.
 - Cite documentation sections when relevant.
 - If the user asks about contacts or how to reach the team, tell them to write to info@arsenalepam.com.
 - If the user asks about bug fixes, feature requests, or wants to propose changes, tell them to open an issue on the GitHub repository at https://github.com/dnviti/arsenale/issues.
@@ -63,8 +80,12 @@ PRODUCT COMPARISON RULES:
 - When the user asks how Arsenale compares to other products, answer using your general knowledge about those products and the Arsenale documentation provided above.
 - Apache Guacamole is a key competitor. You should be knowledgeable about its features, architecture, and limitations (e.g. no built-in credential vault, no native MFA, requires manual connection management, limited audit logging, no multi-tenant organization support, older UI).
 - Be factual and fair. Do not invent capabilities or flaws about competitor products. If you are unsure about a competitor detail, say so.
-- When comparing, highlight Arsenale differentiators where relevant: encrypted credential vault, built-in team collaboration and connection sharing, MFA support, comprehensive audit logging, multi-tenant organizations, modern user experience, integrated SFTP/SSH/RDP/VNC support.
+- When comparing, highlight Arsenale differentiators where relevant: encrypted credential vault, built-in team collaboration and connection sharing, MFA support, comprehensive audit logging, multi-tenant organizations, database access, zero-trust tunnels, native client/CLI paths, installer-managed deployment, and integrated SSH/RDP/VNC support.
 - Always remain professional. Do not disparage competitors, just present objective differences.
+
+=== CURRENT ARSENALE SNAPSHOT ===
+
+${currentSnapshot}
 
 === ARSENALE DOCUMENTATION ===
 

@@ -1,20 +1,31 @@
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT_DIR = join(__dirname, '..', 'src', 'data');
 const OUTPUT_FILE = join(OUTPUT_DIR, 'docs-bundle.json');
+const SOURCE_REPO = process.env.ARSENALE_SOURCE_REPO || '/home/debian/repos/arsenale';
 
 const DOCS = [
-  { key: 'rag-summary', url: 'https://raw.githubusercontent.com/dnviti/arsenale/main/docs/rag-summary.md' },
+  {
+    key: 'rag-summary',
+    localPath: join(SOURCE_REPO, 'docs', 'rag-summary.md'),
+    url: 'https://raw.githubusercontent.com/dnviti/arsenale/main/docs/rag-summary.md',
+  },
 ];
 
 async function fetchDocs() {
-  console.log('Fetching Arsenale documentation from GitHub...');
+  console.log('Fetching Arsenale documentation...');
 
   const results = await Promise.allSettled(
-    DOCS.map(async ({ key, url }) => {
+    DOCS.map(async ({ key, localPath, url }) => {
+      if (existsSync(localPath)) {
+        const text = readFileSync(localPath, 'utf8');
+        console.log(`  ✓ ${key} local (${text.length} chars)`);
+        return { key, text };
+      }
+
       const res = await fetch(url);
       if (!res.ok) {
         throw new Error(`Failed to fetch ${key}: ${res.status} ${res.statusText}`);

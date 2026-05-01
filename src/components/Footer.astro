@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import iconImg from '../assets/icon.png';
+import projectInfo from '../data/project-info.json';
 ---
 
 <footer class="border-t border-dark-border/60">
@@ -14,7 +15,7 @@ import iconImg from '../assets/icon.png';
         </a>
         <p class="text-text-secondary text-sm leading-relaxed max-w-xs">
           Source-available, self-hosted Privileged Access Manager.<br />
-          SSH and RDP in your browser.
+          SSH, RDP, VNC, and database access.
         </p>
       </div>
 
@@ -35,22 +36,22 @@ import iconImg from '../assets/icon.png';
         <h3 class="text-[11px] font-semibold text-text-muted uppercase tracking-[0.15em] mb-5">Project</h3>
         <ul class="space-y-2.5">
           <li>
-            <a href="https://github.com/dnviti/arsenale" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
+            <a href={projectInfo.repositoryUrl} target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
               GitHub Repository
             </a>
           </li>
           <li>
-            <a href="https://github.com/dnviti/arsenale/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
+            <a href={`${projectInfo.repositoryUrl}/blob/main/CONTRIBUTING.md`} target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
               Contributing
             </a>
           </li>
           <li>
-            <a href="https://github.com/dnviti/arsenale/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
+            <a href={`${projectInfo.repositoryUrl}/blob/main/SECURITY.md`} target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
               Report Vulnerability
             </a>
           </li>
           <li>
-            <a href="https://github.com/dnviti/arsenale/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
+            <a href={`${projectInfo.repositoryUrl}/blob/main/LICENSE`} target="_blank" rel="noopener noreferrer" class="text-sm text-text-secondary hover:text-accent transition-colors duration-300">
               BSL 1.1 License
             </a>
           </li>

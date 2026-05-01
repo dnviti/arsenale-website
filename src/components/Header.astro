@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import iconImg from '../assets/icon.png';
+import projectInfo from '../data/project-info.json';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -21,7 +22,7 @@ const currentPath = Astro.url.pathname;
       <span class="text-xl font-serif text-text-primary tracking-wide group-hover:text-accent transition-colors duration-300">
         Arsenale
       </span>
-      <span id="release-version-header" class="hidden text-[11px] font-mono text-text-muted/60 ml-1"></span>
+      <span class="text-[11px] font-mono text-text-muted/60 ml-1">v{projectInfo.version}</span>
     </a>
 
     <!-- Desktop nav -->
@@ -45,7 +46,7 @@ const currentPath = Astro.url.pathname;
 
     <!-- GitHub CTA -->
     <a
-      href="https://github.com/dnviti/arsenale"
+      href={projectInfo.repositoryUrl}
       target="_blank"
       rel="noopener noreferrer"
       class="hidden md:inline-flex items-center gap-2 px-4 py-2 text-[13px] font-medium text-text-secondary bg-dark-surface border border-dark-border rounded-lg hover:text-accent hover:border-accent/30 transition-all duration-300"
@@ -93,7 +94,7 @@ const currentPath = Astro.url.pathname;
       ))}
       <li class="pt-3 mt-2 border-t border-dark-border/60">
         <a
-          href="https://github.com/dnviti/arsenale"
+          href={projectInfo.repositoryUrl}
           target="_blank"
           rel="noopener noreferrer"
           class="flex items-center gap-2 py-2.5 text-sm font-medium text-text-secondary hover:text-accent transition-colors"
